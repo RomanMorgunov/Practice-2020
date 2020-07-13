@@ -13,8 +13,12 @@ namespace Snake
         {
             const int MAP_WIDTH = 80;
             const int MAP_HEIGHT = 25;
-            Console.SetWindowSize(MAP_WIDTH, MAP_HEIGHT);
-            Console.SetBufferSize(MAP_WIDTH, MAP_HEIGHT);
+
+            int score = 0;
+            DrawScore(MAP_HEIGHT, score);
+
+            Console.SetWindowSize(MAP_WIDTH, MAP_HEIGHT + 2);
+            Console.SetBufferSize(MAP_WIDTH, MAP_HEIGHT + 2);
 
             Walls walls = new Walls(MAP_WIDTH, MAP_HEIGHT);
             walls.Draw();
@@ -38,6 +42,8 @@ namespace Snake
                 {
                     food = foodCreator.CreateFood();
                     food.Draw();
+                    score++;
+                    DrawScore(MAP_HEIGHT, score);
                 }
                 else
                     snake.Move();
@@ -57,6 +63,12 @@ namespace Snake
         {
             Console.Clear();
             Console.WriteLine("Game Over!");
+        }
+
+        static void DrawScore(int mapHeight, int score)
+        {
+            Console.SetCursorPosition(0, mapHeight + 1);
+            Console.Write($"Score: {score}");
         }
     }
 }
