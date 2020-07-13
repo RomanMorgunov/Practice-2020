@@ -31,6 +31,7 @@ namespace Snake
             {
                 if (walls.IsHit(snake) || snake.IsHitTail())
                 {
+                    DrawGameOver();
                     break;
                 }
                 if (snake.Eat(food))
@@ -48,6 +49,14 @@ namespace Snake
                     snake.HandleKey(Console.ReadKey().Key); 
                 }
             }
+
+            Console.ReadKey();
+        }
+
+        static void DrawGameOver()
+        {
+            Console.Clear();
+            Console.WriteLine("Game Over!");
         }
     }
 }
