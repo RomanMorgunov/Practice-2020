@@ -14,14 +14,13 @@ namespace Snake
             const int MAP_WIDTH = 80;
             const int MAP_HEIGHT = 25;
 
-            int score = 0;
-            DrawScore(MAP_HEIGHT, score);
-
             Console.SetWindowSize(MAP_WIDTH, MAP_HEIGHT + 2);
             Console.SetBufferSize(MAP_WIDTH, MAP_HEIGHT + 2);
 
             Walls walls = new Walls(MAP_WIDTH, MAP_HEIGHT);
             walls.Draw();
+
+            DrawScore(MAP_HEIGHT, 0);
 
             Point p = new Point(4, 5, '*');
             Snake snake = new Snake(p, 4, Direction.Right);
@@ -36,14 +35,14 @@ namespace Snake
                 if (walls.IsHit(snake) || snake.IsHitTail())
                 {
                     DrawGameOver();
+                    DrawScore(1, snake.Score);
                     break;
                 }
                 if (snake.Eat(food))
                 {
                     food = foodCreator.CreateFood();
                     food.Draw();
-                    score++;
-                    DrawScore(MAP_HEIGHT, score);
+                    DrawScore(MAP_HEIGHT, snake.Score);
                 }
                 else
                     snake.Move();
@@ -65,9 +64,9 @@ namespace Snake
             Console.WriteLine("Game Over!");
         }
 
-        static void DrawScore(int mapHeight, int score)
+        static void DrawScore(int height, int score)
         {
-            Console.SetCursorPosition(0, mapHeight + 1);
+            Console.SetCursorPosition(0, height + 1);
             Console.Write($"Score: {score}");
         }
     }
